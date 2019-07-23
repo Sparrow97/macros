@@ -1,10 +1,10 @@
 Sub copyer()
 
-   With Application
-        .ScreenUpdating = False
-        .EnableEvents = False     'Отключение анимации
-        .DisplayAlerts = False
-    End With
+With Application
+    .ScreenUpdating = False
+    .EnableEvents = False     'Отключение анимации
+    .DisplayAlerts = False
+End With
 
 Worksheets("Check").Activate
 RowLenCheck = ActiveSheet.UsedRange.Rows(ActiveSheet.UsedRange.Rows.Count).Row  'count of rows
@@ -75,5 +75,36 @@ rg.RemoveDuplicates Columns:=Array(1, 2, 3), Header:=xlYes
 Dim rg2 As Range
 Set rg2 = Range("D1").CurrentRegion
 rg2.RemoveDuplicates Columns:=Array(4, 5, 6), Header:=xlYes          'Форматирование хэшей
-End Sub
 
+Worksheets("not").Activate
+RowLenNot = ActiveSheet.UsedRange.Rows(ActiveSheet.UsedRange.Rows.Count).Row
+Dim o As Integer
+o = 1
+For o = 1 To RowLenNot Step 1
+
+    Worksheets("not").Activate
+    Cells(o, 1).Select
+    Selection.copy
+    
+    Worksheets("notification").Activate
+    ActiveSheet.Cells(o, 1).Select
+    ActiveCell.PasteSpecial
+    
+    Worksheets("not").Activate
+    Cells(o, 2).Select
+    Selection.copy
+    
+    Worksheets("notification").Activate
+    ActiveSheet.Cells(o, 5).Select
+    ActiveCell.PasteSpecial
+    
+    Worksheets("not").Activate
+    Cells(o, 3).Select
+    Selection.copy
+    
+     Worksheets("notification").Activate
+    ActiveSheet.Cells(o, 3).Select
+    ActiveCell.PasteSpecial
+    
+Next o
+End Sub
