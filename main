@@ -1,61 +1,50 @@
 Sub copyer()
 
-    With Application
+   With Application
         .ScreenUpdating = False
         .EnableEvents = False     'Отключение анимации
         .DisplayAlerts = False
     End With
-    
+
 Worksheets("Check").Activate
-
-RowLenCheck = ActiveSheet.UsedRange.Rows(ActiveSheet.UsedRange.Rows.Count).Row
-
-Dim i As Integer 'Счетчик цикла
-Dim z As Integer 'Счетчик для вставки в "not" algorithms
+RowLenCheck = ActiveSheet.UsedRange.Rows(ActiveSheet.UsedRange.Rows.Count).Row  'count of rows
+Dim i As Integer 'Cycle counter
+Dim z As Integer 'Counter to insert in "not" algorithms
 z = 1
-Dim x As Integer 'Счетчик для вставки в "not" hash
+Dim x As Integer 'Counter to insert in "not" hash
 x = 1
+
 For i = 1 To RowLenCheck Step 1
-
-Cells(i, 4).Select
-
-        If ActiveCell > 0 Then
+    Cells(i, 4).Select
+    If ActiveCell > 0 Then
+    
+        ActiveSheet.Range(Cells(i, 4), Cells(i, 6)).Select
+        Selection.copy
+            
+        Worksheets("not").Activate
+        ActiveSheet.Range(Cells(z, 1), Cells(z, 2)).Select
+        ActiveCell.PasteSpecial
         
-        ' Копируем название алгоритма и длину ключа, вставляем в нот
-            ActiveSheet.Range(Cells(i, 4), Cells(i, 6)).Select
-            Selection.copy
-            
-            Worksheets("not").Activate
-            ActiveSheet.Range(Cells(z, 1), Cells(z, 2)).Select
-            ActiveCell.PasteSpecial
-            
-            'Копируем категорию
-            
-            Worksheets("Check").Activate
-            Cells(i, 7).Select
-            ActiveCell.copy
-            
-            Worksheets("not").Activate
-            Cells(z, 2).Select
-            ActiveCell.PasteSpecial
-            z = z + 1
-            Worksheets("Check").Activate
+        Worksheets("Check").Activate   'Копируем категорию
+        Cells(i, 7).Select
+        ActiveCell.copy
+        
+        Worksheets("not").Activate
+        Cells(z, 2).Select
+        ActiveCell.PasteSpecial
+        
+        z = z + 1
+        
+        Worksheets("Check").Activate
         
         End If
         
 Next i
-
-
-
-' Алгоритм для хэшей
-
-For j = 1 To RowLenCheck Step 1
-
-Cells(j, 5).Select
-
+For j = 1 To RowLenCheck Step 1 ' Алгоритм для хэшей
+    Cells(j, 5).Select
+    
     If ActiveCell > 0 Then
-    'Копируем название хэша и длину и вставляем в нот
-        ActiveSheet.Range(Cells(j, 5), Cells(j, 6)).Select
+        ActiveSheet.Range(Cells(j, 5), Cells(j, 6)).Select 'Копируем название хэша и длину и вставляем в нот
         Selection.copy
             
         Worksheets("not").Activate
@@ -69,25 +58,22 @@ Cells(j, 5).Select
         Worksheets("not").Activate
         Cells(x, 6).Select
         ActiveCell.PasteSpecial
+        
         x = x + 1
+        
         Worksheets("Check").Activate
+        
     End If
 Next j
 
 
-
 Worksheets("not").Activate
-RowLenNot = ActiveSheet.UsedRange.Rows(ActiveSheet.UsedRange.Rows.Count).Row
+Dim rg As Range
+Set rg = Range("A1").CurrentRegion                                                  'Форматирование алгоритмов
+rg.RemoveDuplicates Columns:=Array(1, 2, 3), Header:=xlYes
 
-alg1 = Range("A1:D4").MergeCells
-alg2 = Range("A1:D4").MergeCells
-
-If alg1 = alg2 Then
-MsgBox "kek"
-End If
-
-
-
-
+Dim rg2 As Range
+Set rg2 = Range("D1").CurrentRegion
+rg2.RemoveDuplicates Columns:=Array(4, 5, 6), Header:=xlYes          'Форматирование хэшей
 End Sub
 
