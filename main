@@ -1,0 +1,66 @@
+Sub copyer()
+
+Worksheets("Check").Activate
+
+Dim i As Integer
+Dim z As Integer
+z = 1
+For i = 1 To 500 Step 1
+
+Cells(i, 4).Select
+
+        If ActiveCell > 0 Then
+        
+        ' Êîïèðóåì íàçâàíèå àëãîðèòìà è äëèíó êëþ÷à, âñòàâëÿåì â íîò
+            ActiveSheet.Range(Cells(i, 4), Cells(i, 6)).Select
+            Selection.copy
+            
+            Worksheets("not").Activate
+            ActiveSheet.Range(Cells(z, 1), Cells(z, 2)).Select
+            ActiveCell.PasteSpecial
+            z = z + 1
+            'Êîïèðóåì êàòåãîðèþ
+            
+            Worksheets("Check").Activate
+            Cells(i, 7).Select
+            ActiveCell.copy
+            
+            Worksheets("not").Activate
+            Cells(, 2).Select
+            ActiveCell.PasteSpecial
+            Worksheets("Check").Activate
+        
+        End If
+        
+Next i
+
+
+
+' Àëãîðèòì äëÿ õýøåé
+
+For j = 1 To 500 Step 1
+
+Cells(j, 5).Select
+
+    If ActiveCell > 0 Then
+    'Êîïèðóåì íàçâàíèå õýøà è äëèíó è âñòàâëÿåì â íîò
+        ActiveSheet.Range(Cells(j, 5), Cells(j, 6)).Select
+        Selection.copy
+            
+        Worksheets("not").Activate
+        ActiveSheet.Range(Cells(j, 4), Cells(j, 6)).Select
+        ActiveCell.PasteSpecial
+            
+        Worksheets("Check").Activate
+        Cells(j, 7).Select
+        ActiveCell.copy
+            
+        Worksheets("not").Activate
+        Cells(j, 6).Select
+        ActiveCell.PasteSpecial
+        Worksheets("Check").Activate
+    End If
+Next j
+
+End Sub
+
