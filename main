@@ -2,7 +2,7 @@ Sub copyer()
 
 With Application
     .ScreenUpdating = False
-    .EnableEvents = False     'Отключение анимации
+    .EnableEvents = False     'Îòêëþ÷åíèå àíèìàöèè
     .DisplayAlerts = False
 End With
 
@@ -25,7 +25,7 @@ For i = 1 To RowLenCheck Step 1
         ActiveSheet.Range(Cells(z, 1), Cells(z, 2)).Select
         ActiveCell.PasteSpecial
         
-        Worksheets("Check").Activate   'Копируем категорию
+        Worksheets("Check").Activate   'Êîïèðóåì êàòåãîðèþ
         Cells(i, 7).Select
         ActiveCell.copy
         
@@ -40,11 +40,11 @@ For i = 1 To RowLenCheck Step 1
         End If
         
 Next i
-For j = 1 To RowLenCheck Step 1 ' Алгоритм для хэшей
+For j = 1 To RowLenCheck Step 1 ' Àëãîðèòì äëÿ õýøåé
     Cells(j, 5).Select
     
     If ActiveCell > 0 Then
-        ActiveSheet.Range(Cells(j, 5), Cells(j, 6)).Select 'Копируем название хэша и длину и вставляем в нот
+        ActiveSheet.Range(Cells(j, 5), Cells(j, 6)).Select 'Êîïèðóåì íàçâàíèå õýøà è äëèíó è âñòàâëÿåì â íîò
         Selection.copy
             
         Worksheets("not").Activate
@@ -69,18 +69,18 @@ Next j
 
 Worksheets("not").Activate
 Dim rg As Range
-Set rg = Range("A1").CurrentRegion                                                  'Форматирование алгоритмов
+Set rg = Range("A1").CurrentRegion                                                  'Ôîðìàòèðîâàíèå àëãîðèòìîâ
 rg.RemoveDuplicates Columns:=Array(1, 2, 3), Header:=xlYes
 
 Dim rg2 As Range
 Set rg2 = Range("D1").CurrentRegion
-rg2.RemoveDuplicates Columns:=Array(4, 5, 6), Header:=xlYes          'Форматирование хэшей
+rg2.RemoveDuplicates Columns:=Array(4, 5, 6), Header:=xlYes          'Ôîðìàòèðîâàíèå õýøåé
 
 Worksheets("not").Activate
 RowLenNot = ActiveSheet.UsedRange.Rows(ActiveSheet.UsedRange.Rows.Count).Row
 Dim o As Integer
 o = 1
-For o = 1 To RowLenNot Step 1
+For o = 1 To RowLenNot Step 1 'alg for algs copy in notification
 
     Worksheets("not").Activate
     Cells(o, 1).Select
@@ -95,7 +95,7 @@ For o = 1 To RowLenNot Step 1
     Selection.copy
     
     Worksheets("notification").Activate
-    ActiveSheet.Cells(o, 5).Select
+    ActiveSheet.Cells(o, 2).Select
     ActiveCell.PasteSpecial
     
     Worksheets("not").Activate
@@ -107,4 +107,93 @@ For o = 1 To RowLenNot Step 1
     ActiveCell.PasteSpecial
     
 Next o
+
+For o = 1 To RowLenNot Step 1 'alg for algs copy in notification
+
+    Worksheets("not").Activate
+    Cells(o, 4).Select
+    Selection.copy
+    
+    Worksheets("notification").Activate
+    ActiveSheet.Cells(o, 4).Select
+    ActiveCell.PasteSpecial
+    
+    Worksheets("not").Activate
+    Cells(o, 5).Select
+    Selection.copy
+    
+    Worksheets("notification").Activate
+    ActiveSheet.Cells(o, 5).Select
+    ActiveCell.PasteSpecial
+    
+    Worksheets("not").Activate
+    Cells(o, 6).Select
+    Selection.copy
+    
+     Worksheets("notification").Activate
+    ActiveSheet.Cells(o, 6).Select
+    ActiveCell.PasteSpecial
+    
+Next o
+
+Worksheets("notification").Activate
+Range("C:C").NumberFormat = "@"
+Range("E:E").NumberFormat = "@"
+Range("L:L").NumberFormat = "@"
+Range("M:M").NumberFormat = "@"
+Dim dl1 As String
+Dim dl2 As String
+
+For l = 1 To RowLenNot Step 1
+
+dl1 = Cells(l, 3)
+dl2 = Cells(l, 2)
+Cells(l, 7).Value = Cells(l, 1) + Cells(1, 10) + dl1 + Cells(1, 12) + dl2 'alg for alg
+
+Next l
+
+For j = 1 To RowLenNot Step 1
+
+dl1 = Cells(j, 5)
+dl2 = Cells(j, 6)
+Cells(j, 8).Value = Cells(j, 4) + Cells(1, 11) + dl1 + Cells(1, 12) + dl2
+
+Next j
+
+For p = 1 To RowLenNot Step 1
+
+Cells(p, 9).Value = Cells(p, 11) + Cells(p, 10) + Cells(p, 13) 'alg for hash
+
+Next p
+
+
+For o = 1 To RowLenNot Step 1
+
+    Worksheets("notification").Activate
+    Cells(o, 6).Select
+    Selection.copy
+    
+    Worksheets("Final").Activate
+    ActiveSheet.Cells(o, 1).Select
+    ActiveCell.PasteSpecial
+    
+Next o
+
+Dim oneRow As Integer
+oneRow = RowLenNot
+Dim twoROW As Integer
+twoROW = RowLenNot * 2
+
+For i = oneRow To j = twoROW Step 1
+
+    Worksheets("notification").Activate
+    Cells(o, 9).Select
+    Selection.copy
+    
+    Worksheets("Final").Activate
+    ActiveSheet.Cells(o, 1).Select
+    ActiveCell.PasteSpecial
+    
+Next i
+
 End Sub
