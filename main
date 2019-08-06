@@ -136,6 +136,10 @@ For o = 1 To RowLenNot Step 1 'alg for algs copy in notification
     
 Next o
 
+
+
+'Print normal values (hash n alg) in string format (look down)
+
 Worksheets("notification").Activate
 Range("C:C").NumberFormat = "@"
 Range("E:E").NumberFormat = "@"
@@ -160,17 +164,14 @@ Cells(j, 8).Value = Cells(j, 4) + Cells(1, 11) + dl1 + Cells(1, 12) + dl2
 
 Next j
 
-For p = 1 To RowLenNot Step 1
 
-Cells(p, 9).Value = Cells(p, 11) + Cells(p, 10) + Cells(p, 13) 'alg for hash
 
-Next p
-
+'Paste to Final
 
 For o = 1 To RowLenNot Step 1
 
     Worksheets("notification").Activate
-    Cells(o, 6).Select
+    Cells(o, 7).Select
     Selection.copy
     
     Worksheets("Final").Activate
@@ -179,21 +180,27 @@ For o = 1 To RowLenNot Step 1
     
 Next o
 
+
 Dim oneRow As Integer
 oneRow = RowLenNot
 Dim twoROW As Integer
 twoROW = RowLenNot * 2
 
-For i = oneRow To j = twoROW Step 1
+Dim k As Integer
+k = o
 
+For i = 1 To oneRow Step 1
     Worksheets("notification").Activate
-    Cells(o, 9).Select
+    Cells(i, 8).Select
     Selection.copy
     
     Worksheets("Final").Activate
-    ActiveSheet.Cells(o, 1).Select
+    ActiveSheet.Cells(k, 1).Select
     ActiveCell.PasteSpecial
+    
+    k = k + 1
     
 Next i
 
 End Sub
+
